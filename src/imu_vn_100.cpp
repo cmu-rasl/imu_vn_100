@@ -111,6 +111,7 @@ void ImuVn100::LoadParameters() {
   pnh_.param("baudrate", baudrate_, 115200);
   pnh_.param("imu_rate", imu_rate_, kDefaultImuRate);
 
+  pnh_.param("enable_rotate", enable_rotate_, true);
   pnh_.param("enable_mag", enable_mag_, true);
   pnh_.param("enable_pres", enable_pres_, true);
   pnh_.param("enable_temp", enable_temp_, true);
@@ -136,6 +137,10 @@ void ImuVn100::LoadParameters() {
 void ImuVn100::CreateDiagnosedPublishers() {
   imu_rate_double_ = imu_rate_;
   pd_imu_.Create<Imu>(pnh_, "imu", updater_, imu_rate_double_);
+  if (enable_rotate_) {
+    pd_rotate_.Create<Imu>(pnh_, "body_imu", updater_,
+                           imu_rate_double_);
+  }
   if (enable_mag_) {
     pd_mag_.Create<MagneticField>(pnh_, "magnetic_field", updater_,
                                   imu_rate_double_);
@@ -281,11 +286,23 @@ void ImuVn100::PublishData(const VnDeviceCompositeData& data) {
   FillImuMessage(imu_msg, data, binary_output_);
   pd_imu_.Publish(imu_msg);
 
+  sensor_msgs::Imu rotated_msg = imu_msg;
+
+  if (enable_rotate_) {
+    /* Transform from VectorNav reference frame into body reference frame */
+    rotated_msg.linear_acceleration = gr::toVector3(rotater_.sensorToBody(gr::fromROS(imu_msg.linear_acceleration)));
+    rotated_msg.angular_velocity = gr::toVector3(rotater_.sensorToBody(gr::fromROS(imu_msg.angular_velocity)));
+    rotated_msg.orientation = gr::toQuatMsg(rotater_.sensorToBody(gr::fromROS(imu_msg.orientation)));
+
+    pd_rotate_.Publish(rotated_msg);
+  }
+
   if (enable_mag_) {
     sensor_msgs::MagneticField mag_msg;
     mag_msg.header = imu_msg.header;
     RosVector3FromVnVector3(mag_msg.magnetic_field, data.magnetic);
-    mag_msg.magnetic_field = gr::toVector3(rotater_.sensorToBody(gr::fromROS(mag_msg.magnetic_field)));
+    if (enable_rotate_)
+      mag_msg.magnetic_field = gr::toVector3(rotater_.sensorToBody(gr::fromROS(mag_msg.magnetic_field)));
     pd_mag_.Publish(mag_msg);
   }
 
@@ -306,7 +323,10 @@ void ImuVn100::PublishData(const VnDeviceCompositeData& data) {
   if (enable_eulerzyx_) {
     geometry_msgs::Vector3Stamped zyx;
     zyx.header = imu_msg.header;
-    zyx.vector = gr::toVector3(gr::QuatMsgToZYX(imu_msg.orientation));
+    if (enable_rotate_)
+      zyx.vector = gr::toVector3(gr::QuatMsgToZYX(rotated_msg.orientation));
+    else
+      zyx.vector = gr::toVector3(gr::QuatMsgToZYX(imu_msg.orientation));
     pd_eulerzyx_.Publish(zyx);
   }
 
@@ -374,11 +394,6 @@ void FillImuMessage(sensor_msgs::Imu& imu_msg,
     RosVector3FromVnVector3(imu_msg.linear_acceleration, data.acceleration);
     RosVector3FromVnVector3(imu_msg.angular_velocity, data.angularRate);
   }
-
-  /* Transform from VectorNav reference frame into body reference frame */
-  imu_msg.linear_acceleration = gr::toVector3(imu_vn_100_ptr->rotater_.sensorToBody(gr::fromROS(imu_msg.linear_acceleration)));
-  imu_msg.angular_velocity = gr::toVector3(imu_vn_100_ptr->rotater_.sensorToBody(gr::fromROS(imu_msg.angular_velocity)));
-  imu_msg.orientation = gr::toQuatMsg(imu_vn_100_ptr->rotater_.sensorToBody(gr::fromROS(imu_msg.orientation)));
 }
 
 }  //  namespace imu_vn_100

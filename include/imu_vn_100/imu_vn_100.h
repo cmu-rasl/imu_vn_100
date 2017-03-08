@@ -168,6 +168,7 @@ class ImuVn100 {
   double imu_rate_double_ = kDefaultImuRate;
   std::string frame_id_;
 
+  bool enable_rotate_ = true;
   bool enable_eulerzyx_ = true;
   bool enable_mag_ = true;
   bool enable_pres_ = true;
@@ -177,7 +178,7 @@ class ImuVn100 {
   SyncInfo sync_info_;
 
   du::Updater updater_;
-  DiagnosedPublisher pd_imu_, pd_mag_, pd_pres_, pd_temp_, pd_eulerzyx_;
+  DiagnosedPublisher pd_imu_, pd_rotate_, pd_mag_, pd_pres_, pd_temp_, pd_eulerzyx_;
 
   void FixImuRate();
   void LoadParameters();
