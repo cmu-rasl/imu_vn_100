@@ -16,6 +16,11 @@
 
 #include <imu_vn_100/imu_vn_100.h>
 
+#include <std_msgs/UInt16.h>
+
+namespace gu = geometry_utils;
+namespace gr = gu::ros;
+
 namespace imu_vn_100 {
 
 // LESS HACK IS STILL HACK
@@ -109,11 +114,20 @@ void ImuVn100::LoadParameters() {
   pnh_.param("enable_mag", enable_mag_, true);
   pnh_.param("enable_pres", enable_pres_, true);
   pnh_.param("enable_temp", enable_temp_, true);
+  pnh_.param("enable_eulerzyx", enable_eulerzyx_, true);
 
   pnh_.param("sync_rate", sync_info_.rate, kDefaultSyncOutRate);
   pnh_.param("sync_pulse_width_us", sync_info_.pulse_width_us, 1000);
 
   pnh_.param("binary_output", binary_output_, true);
+
+  double roll, pitch, yaw;
+  pnh_.param("offset/roll", roll, 0.0);
+  pnh_.param("offset/pitch", pitch, 0.0);
+  pnh_.param("offset/yaw", yaw, 0.0);
+
+  gu::Rot3 Rbv = gu::ZYXToR(gu::Vec3(roll, pitch, yaw));
+  rotater_.setRotation(Rbv);
 
   FixImuRate();
   sync_info_.FixSyncRate();
@@ -132,6 +146,10 @@ void ImuVn100::CreateDiagnosedPublishers() {
   }
   if (enable_temp_) {
     pd_temp_.Create<Temperature>(pnh_, "temperature", updater_,
+                                 imu_rate_double_);
+  }
+  if (enable_eulerzyx_) {
+    pd_eulerzyx_.Create<geometry_msgs::Vector3Stamped>(pnh_, "euler_zyx", updater_,
                                  imu_rate_double_);
   }
 }
@@ -267,6 +285,7 @@ void ImuVn100::PublishData(const VnDeviceCompositeData& data) {
     sensor_msgs::MagneticField mag_msg;
     mag_msg.header = imu_msg.header;
     RosVector3FromVnVector3(mag_msg.magnetic_field, data.magnetic);
+    mag_msg.magnetic_field = gr::toVector3(rotater_.sensorToBody(gr::fromROS(mag_msg.magnetic_field)));
     pd_mag_.Publish(mag_msg);
   }
 
@@ -282,6 +301,13 @@ void ImuVn100::PublishData(const VnDeviceCompositeData& data) {
     temp_msg.header = imu_msg.header;
     temp_msg.temperature = data.temperature;
     pd_temp_.Publish(temp_msg);
+  }
+
+  if (enable_eulerzyx_) {
+    geometry_msgs::Vector3Stamped zyx;
+    zyx.header = imu_msg.header;
+    zyx.vector = gr::toVector3(gr::QuatMsgToZYX(imu_msg.orientation));
+    pd_eulerzyx_.Publish(zyx);
   }
 
   sync_info_.Update(data.syncInCnt, imu_msg.header.stamp);
@@ -344,9 +370,15 @@ void FillImuMessage(sensor_msgs::Imu& imu_msg,
     RosVector3FromVnVector3(imu_msg.linear_acceleration,
                             data.angularRateUncompensated);
   } else {
+    RosQuaternionFromVnQuaternion(imu_msg.orientation, data.quaternion);
     RosVector3FromVnVector3(imu_msg.linear_acceleration, data.acceleration);
     RosVector3FromVnVector3(imu_msg.angular_velocity, data.angularRate);
   }
+
+  /* Transform from VectorNav reference frame into body reference frame */
+  imu_msg.linear_acceleration = gr::toVector3(imu_vn_100_ptr->rotater_.sensorToBody(gr::fromROS(imu_msg.linear_acceleration)));
+  imu_msg.angular_velocity = gr::toVector3(imu_vn_100_ptr->rotater_.sensorToBody(gr::fromROS(imu_msg.angular_velocity)));
+  imu_msg.orientation = gr::toQuatMsg(imu_vn_100_ptr->rotater_.sensorToBody(gr::fromROS(imu_msg.orientation)));
 }
 
 }  //  namespace imu_vn_100

@@ -27,6 +27,10 @@
 
 #include <vn100.h>
 
+#include <geometry_utils/GeometryUtilsROS.h>
+#include <geometry_msgs/PointStamped.h>
+#include <geometry_msgs/Vector3Stamped.h>
+
 namespace imu_vn_100 {
 
 namespace du = diagnostic_updater;
@@ -53,6 +57,54 @@ struct DiagnosedPublisher {
   void Publish(const MessageT& message) {
     diag->tick(message.header.stamp);
     pub.publish(message);
+  }
+};
+
+/**
+ * @brief Rotater contains the functions for rotating
+ *        3 x 1 vectors and quaternions
+ */
+
+struct Rotater {
+  // rotation from vectornav frame to body frame
+  geometry_utils::Rot3 Rbv;
+  geometry_utils::Quat qbv;
+  geometry_utils::Quat q_nwu_ned;
+
+  Rotater() {
+    Rbv.eye();
+    qbv = geometry_utils::RToQuat(Rbv);
+    q_nwu_ned.x() = 1.0;
+    q_nwu_ned.y() = 0.0;
+    q_nwu_ned.z() = 0.0;
+    q_nwu_ned.w() = 0.0;
+  }
+
+  ~Rotater() {return;}
+
+  void setRotation(const geometry_utils::Rot3& rot) {
+    // b = body reference frame
+    // v = VectorNav VN-100 reference frame
+    Rbv = rot;
+    qbv = geometry_utils::RToQuat(Rbv);
+  }
+
+  geometry_utils::Vec3 sensorToBody(const geometry_utils::Vec3& in) const {
+    return Rbv*in;
+  }
+
+  geometry_utils::Quat sensorToBody(const geometry_utils::Quat& in) const {
+    /*********************************************************************
+       Note: VectorNav gives an orientation corresponding to R_wned_v, the
+       rotation that takes vectors from the VectorNav frame to the NED
+       world frame. However, we want R_wnwu_b, the rotation that takes
+       vectors from the desired body frame to the NWU world frame.
+
+          R_wnwu_b = R_wnwu_wned * R_wned_v * R_b_v^T
+
+     ********************************************************************/
+    geometry_utils::Quat q_ned_v = in.normalize();
+    return q_nwu_ned * q_ned_v * qbv.conj();
   }
 };
 
@@ -103,6 +155,8 @@ class ImuVn100 {
 
   const SyncInfo sync_info() const { return sync_info_; }
 
+  Rotater rotater_;
+
  private:
   ros::NodeHandle pnh_;
   Vn100 imu_;
@@ -114,6 +168,7 @@ class ImuVn100 {
   double imu_rate_double_ = kDefaultImuRate;
   std::string frame_id_;
 
+  bool enable_eulerzyx_ = true;
   bool enable_mag_ = true;
   bool enable_pres_ = true;
   bool enable_temp_ = true;
@@ -122,7 +177,7 @@ class ImuVn100 {
   SyncInfo sync_info_;
 
   du::Updater updater_;
-  DiagnosedPublisher pd_imu_, pd_mag_, pd_pres_, pd_temp_;
+  DiagnosedPublisher pd_imu_, pd_mag_, pd_pres_, pd_temp_, pd_eulerzyx_;
 
   void FixImuRate();
   void LoadParameters();
