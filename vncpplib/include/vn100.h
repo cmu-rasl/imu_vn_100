@@ -807,6 +807,21 @@ DLL_EXPORT VN_ERROR_CODE vn100_setFilterBasicControl(
 	VnVector3 angularRateLimit,
 	bool waitForResponse);
 
+  VN_ERROR_CODE vn100_getVpeBasicControl(
+                                         Vn100* vn100,
+                                         unsigned char* enable,
+                                         unsigned char* headingMode,
+                                         unsigned char* filteringMode,
+                                         unsigned char* tuningMode);
+
+  VN_ERROR_CODE vn100_setVpeBasicControl(
+                                         Vn100* vn100,
+                                         unsigned char enable,
+                                         unsigned char headingMode,
+                                         unsigned char filteringMode,
+                                         unsigned char tuningMode,
+                                         bool waitForResponse);
+
 /**
  * \brief Gets the values in the VPE Magnetometer Advanced Tuning register.
  * \deprecated This function is deprecated in version 2.0 and greater of the

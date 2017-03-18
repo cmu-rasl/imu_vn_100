@@ -259,6 +259,18 @@ void ImuVn100::Stream(bool async) {
     // Remove the callback function for new data event
     VnEnsure(vn100_unregisterAsyncDataReceivedListener(&imu_, &AsyncListener));
   }
+  unsigned char
+  vpe_enable,
+  vpe_headingMode,
+  vpe_filteringMode,
+  vpe_tuningMode;
+  VnEnsure(vn100_getVpeBasicControl(&imu_, &vpe_enable,&vpe_headingMode,&vpe_filteringMode,&vpe_tuningMode));
+  ROS_INFO("Initial VPE Settings: %d %d %d %d",vpe_enable,vpe_headingMode,vpe_filteringMode,vpe_tuningMode );
+  // Set Magnetometer to be in relative mode
+  VnEnsure(vn100_setVpeBasicControl(&imu_, 1,2,1,1, true));
+  VnEnsure(vn100_getVpeBasicControl(&imu_, &vpe_enable,&vpe_headingMode,&vpe_filteringMode,&vpe_tuningMode));
+  ROS_INFO("Set VPE Settings: %d %d %d %d",vpe_enable,vpe_headingMode,vpe_filteringMode,vpe_tuningMode );
+
 
   // Resume the device
   VnEnsure(vn100_resumeAsyncOutputs(&imu_, true));

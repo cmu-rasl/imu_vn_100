@@ -1169,6 +1169,73 @@ VN_ERROR_CODE vn100_setFilterBasicControl(
 	return errorCode;
 }
 
+VN_ERROR_CODE vn100_getVpeBasicControl(
+                                       Vn100* vn100,
+                                       unsigned char* enable,
+                                       unsigned char* headingMode,
+                                       unsigned char* filteringMode,
+                                       unsigned char* tuningMode)
+{
+  const char* cmdToSend = "$VNRRG,35";
+  char delims[] = ",*";
+  char* result;
+  int errorCode;
+  const char* responseMatch = "VNRRG,";
+  if (!vn100->isConnected)
+    return VNERR_NOT_CONNECTED;
+  errorCode = vndevice_transaction(&vn100->vndevice, cmdToSend, responseMatch);
+  if (errorCode != VNERR_NO_ERROR)
+    return errorCode;
+
+  result = strtok(vndevice_getResponseBuffer(&vn100->vndevice), delims);  /* Returns VNRRG */
+  result = strtok(0, delims);                            /* Returns register ID */
+  result = strtok(0, delims);
+  if (result == NULL)
+    return VNERR_INVALID_VALUE;
+  *enable = (unsigned char) atoi(result);result = strtok(0, delims);
+  if (result == NULL)
+    return VNERR_INVALID_VALUE;
+  *headingMode = (unsigned char) atoi(result);
+  result = strtok(0, delims);
+  if (result == NULL)
+    return VNERR_INVALID_VALUE;
+  *filteringMode = (unsigned char) atoi(result);
+  result = strtok(0, delims);
+  if (result == NULL)
+    return VNERR_INVALID_VALUE;
+  *tuningMode = (unsigned char) atoi(result);
+  return VNERR_NO_ERROR;
+}
+
+VN_ERROR_CODE vn100_setVpeBasicControl(
+                                      Vn100* vn100,
+                                      unsigned char enable,
+                                      unsigned char headingMode,
+                                      unsigned char filteringMode,
+                                      unsigned char tuningMode,
+                                      bool waitForResponse)
+{
+  int errorCode;
+  int curBufLoc = 0;
+  char cmdToSendBuilder[VN_MAX_COMMAND_SIZE];
+  if (!vn100->isConnected)
+    return VNERR_NOT_CONNECTED;
+  curBufLoc = sprintf(cmdToSendBuilder, "$VNWRG,35,");
+  curBufLoc += sprintf(cmdToSendBuilder + curBufLoc, "%d", enable);
+  curBufLoc += sprintf(cmdToSendBuilder + curBufLoc, ",");
+  curBufLoc += sprintf(cmdToSendBuilder + curBufLoc, "%d", headingMode);
+  curBufLoc += sprintf(cmdToSendBuilder + curBufLoc, ",");
+  curBufLoc += sprintf(cmdToSendBuilder + curBufLoc, "%d", filteringMode);
+  curBufLoc += sprintf(cmdToSendBuilder + curBufLoc, ",");
+  curBufLoc += sprintf(cmdToSendBuilder + curBufLoc, "%d", tuningMode);
+  cmdToSendBuilder[curBufLoc] = '\0';
+  if (waitForResponse)
+    errorCode = vndevice_transaction(&vn100->vndevice, cmdToSendBuilder, "VNWRG,");
+  else
+    errorCode = vndevice_writeOutCommand(&vn100->vndevice, cmdToSendBuilder);
+  return errorCode;
+}
+
 VN_ERROR_CODE vn100_getVpeMagnetometerAdvancedTuning(
 	Vn100* vn100,
 	VnVector3* minimumFiltering,
@@ -2135,7 +2202,7 @@ int vn100_get_timeout(
 }
 
 VN_ERROR_CODE vn100_set_timeout(
-	Vn100* vn100, 
+	Vn100* vn100,
 	int timeout)
 {
 	if (!vn100->isConnected)
@@ -2147,7 +2214,7 @@ VN_ERROR_CODE vn100_set_timeout(
 }
 
 VN_ERROR_CODE vn100_getCurrentAsyncData(
-	Vn100* vn100, 
+	Vn100* vn100,
 	VnDeviceCompositeData* curData)
 {
 	if (!vn100->isConnected)
