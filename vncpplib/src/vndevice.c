@@ -4161,7 +4161,17 @@ DLL_EXPORT VN_ERROR_CODE vndevice_setImuFilteringConfiguration(
 {
 	int errorCode;
 	char cmdToSendBuilder[VN_MAX_COMMAND_SIZE];
-
+  printf("$VNWRG,85,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+		magWindowSize,
+		accelWindowSize,
+		gyroWindowSize,
+		tempWindowSize,
+		presWindowSize,
+		magFilterMode,
+		accelFilterMode,
+		gyroFilterMode,
+		tempFilterMode,
+		presFilterMode);
 	sprintf(cmdToSendBuilder, "$VNWRG,85,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
 		magWindowSize,
 		accelWindowSize,

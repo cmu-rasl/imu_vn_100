@@ -4,19 +4,19 @@
  *
  * \section LICENSE
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 VectorNav Technologies, LLC
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -292,7 +292,7 @@ VN_ERROR_CODE vn100_knownMagneticDisturbance(
 
 	if (!vn100->isConnected)
 		return VNERR_NOT_CONNECTED;
-	
+
 	cmdToSend = isDisturbancePresent ? "$VNKMD,1" : "$VNKMD,0";
 
 	if (waitForResponse)
@@ -313,7 +313,7 @@ VN_ERROR_CODE vn100_knownAccelerationDisturbance(
 
 	if (!vn100->isConnected)
 		return VNERR_NOT_CONNECTED;
-	
+
 	cmdToSend = isDisturbancePresent ? "$VNKAD,1" : "$VNKAD,0";
 
 	if (waitForResponse)
@@ -2226,7 +2226,7 @@ VN_ERROR_CODE vn100_getCurrentAsyncData(
 }
 
 VN_ERROR_CODE vn100_writeSettings(
-	Vn100* vn100, 
+	Vn100* vn100,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2238,7 +2238,7 @@ VN_ERROR_CODE vn100_writeSettings(
 }
 
 VN_ERROR_CODE vn100_restoreFactorySettings(
-	Vn100* vn100, 
+	Vn100* vn100,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2260,8 +2260,8 @@ VN_ERROR_CODE vn100_reset(
 }
 
 VN_ERROR_CODE vn100_getUserTag(
-	Vn100* vn100, 
-	char* userTagBuffer, 
+	Vn100* vn100,
+	char* userTagBuffer,
 	uint32_t userTagBufferLength)
 {
 	if (!vn100->isConnected)
@@ -2274,9 +2274,9 @@ VN_ERROR_CODE vn100_getUserTag(
 }
 
 VN_ERROR_CODE vn100_setUserTag(
-	Vn100* vn100, 
-	char* userTagData, 
-	uint32_t userTagDataLength, 
+	Vn100* vn100,
+	char* userTagData,
+	uint32_t userTagDataLength,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2290,8 +2290,8 @@ VN_ERROR_CODE vn100_setUserTag(
 }
 
 VN_ERROR_CODE vn100_getModelNumber(
-	Vn100* vn100, 
-	char* modelBuffer, 
+	Vn100* vn100,
+	char* modelBuffer,
 	uint32_t modelBufferLength)
 {
 	if (!vn100->isConnected)
@@ -2304,7 +2304,7 @@ VN_ERROR_CODE vn100_getModelNumber(
 }
 
 VN_ERROR_CODE vn100_getHardwareRevision(
-	Vn100* vn100, 
+	Vn100* vn100,
 	int32_t* hardwareRevision)
 {
 	if (!vn100->isConnected)
@@ -2316,8 +2316,8 @@ VN_ERROR_CODE vn100_getHardwareRevision(
 }
 
 VN_ERROR_CODE vn100_getSerialNumber(
-	Vn100* vn100, 
-	char* serialNumberBuffer, 
+	Vn100* vn100,
+	char* serialNumberBuffer,
 	uint32_t serialNumberBufferLength)
 {
 	if (!vn100->isConnected)
@@ -2330,8 +2330,8 @@ VN_ERROR_CODE vn100_getSerialNumber(
 }
 
 VN_ERROR_CODE vn100_getFirmwareVersion(
-	Vn100* vn100, 
-	char* firmwareVersionBuffer, 
+	Vn100* vn100,
+	char* firmwareVersionBuffer,
 	uint32_t firmwareVersionBufferLength)
 {
 	if (!vn100->isConnected)
@@ -2344,7 +2344,7 @@ VN_ERROR_CODE vn100_getFirmwareVersion(
 }
 
 VN_ERROR_CODE vn100_getSerialBaudRate(
-	Vn100* vn100, 
+	Vn100* vn100,
 	uint32_t* serialBaudrate)
 {
 	if (!vn100->isConnected)
@@ -2356,8 +2356,8 @@ VN_ERROR_CODE vn100_getSerialBaudRate(
 }
 
 VN_ERROR_CODE vn100_setSerialBaudRate(
-	Vn100* vn100, 
-	uint32_t serialBaudrate, 
+	Vn100* vn100,
+	uint32_t serialBaudrate,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2370,7 +2370,7 @@ VN_ERROR_CODE vn100_setSerialBaudRate(
 }
 
 VN_ERROR_CODE vn100_getAsynchronousDataOutputType(
-	Vn100* vn100, 
+	Vn100* vn100,
 	uint32_t* asyncDataOutputType)
 {
 	if (!vn100->isConnected)
@@ -2382,8 +2382,8 @@ VN_ERROR_CODE vn100_getAsynchronousDataOutputType(
 }
 
 VN_ERROR_CODE vn100_setAsynchronousDataOutputType(
-	Vn100* vn100, 
-	uint32_t asyncDataOutputType, 
+	Vn100* vn100,
+	uint32_t asyncDataOutputType,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2396,7 +2396,7 @@ VN_ERROR_CODE vn100_setAsynchronousDataOutputType(
 }
 
 VN_ERROR_CODE vn100_getAsynchronousDataOutputFrequency(
-	Vn100* vn100, 
+	Vn100* vn100,
 	uint32_t* asyncDataOutputFrequency)
 {
 	if (!vn100->isConnected)
@@ -2408,8 +2408,8 @@ VN_ERROR_CODE vn100_getAsynchronousDataOutputFrequency(
 }
 
 VN_ERROR_CODE vn100_setAsynchronousDataOutputFrequency(
-	Vn100* vn100, 
-	uint32_t asyncDataOutputFrequency, 
+	Vn100* vn100,
+	uint32_t asyncDataOutputFrequency,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2422,7 +2422,7 @@ VN_ERROR_CODE vn100_setAsynchronousDataOutputFrequency(
 }
 
 VN_ERROR_CODE vn100_getYawPitchRoll(
-	Vn100* vn100, 
+	Vn100* vn100,
 	VnYpr* attitude)
 {
 	if (!vn100->isConnected)
@@ -2434,7 +2434,7 @@ VN_ERROR_CODE vn100_getYawPitchRoll(
 }
 
 VN_ERROR_CODE vn100_getQuaternion(
-	Vn100* vn100, 
+	Vn100* vn100,
 	VnQuaternion* attitude)
 {
 	if (!vn100->isConnected)
@@ -2446,10 +2446,10 @@ VN_ERROR_CODE vn100_getQuaternion(
 }
 
 VN_ERROR_CODE vn100_getYawPitchRollMagneticAccelerationAngularRate(
-	Vn100* vn100, 
-	VnYpr* attitude, 
-	VnVector3* magnetic, 
-	VnVector3* acceleration, 
+	Vn100* vn100,
+	VnYpr* attitude,
+	VnVector3* magnetic,
+	VnVector3* acceleration,
 	VnVector3* angularRate)
 {
 	if (!vn100->isConnected)
@@ -2464,10 +2464,10 @@ VN_ERROR_CODE vn100_getYawPitchRollMagneticAccelerationAngularRate(
 }
 
 VN_ERROR_CODE vn100_getQuaternionMagneticAccelerationAngularRate(
-	Vn100* vn100, 
-	VnQuaternion* attitude, 
-	VnVector3* magnetic, 
-	VnVector3* acceleration, 
+	Vn100* vn100,
+	VnQuaternion* attitude,
+	VnVector3* magnetic,
+	VnVector3* acceleration,
 	VnVector3* angularRate)
 {
 	if (!vn100->isConnected)
@@ -2482,7 +2482,7 @@ VN_ERROR_CODE vn100_getQuaternionMagneticAccelerationAngularRate(
 }
 
 VN_ERROR_CODE vn100_getMagnetic(
-	Vn100* vn100, 
+	Vn100* vn100,
 	VnVector3* magnetic)
 {
 	if (!vn100->isConnected)
@@ -2494,7 +2494,7 @@ VN_ERROR_CODE vn100_getMagnetic(
 }
 
 VN_ERROR_CODE vn100_getAcceleration(
-	Vn100* vn100, 
+	Vn100* vn100,
 	VnVector3* acceleration)
 {
 	if (!vn100->isConnected)
@@ -2506,7 +2506,7 @@ VN_ERROR_CODE vn100_getAcceleration(
 }
 
 VN_ERROR_CODE vn100_getAngularRate(
-	Vn100* vn100, 
+	Vn100* vn100,
 	VnVector3* angularRate)
 {
 	if (!vn100->isConnected)
@@ -2518,9 +2518,9 @@ VN_ERROR_CODE vn100_getAngularRate(
 }
 
 VN_ERROR_CODE vn100_getMagneticAccelerationAngularRate(
-	Vn100* vn100, 
-	VnVector3* magnetic, 
-	VnVector3* acceleration, 
+	Vn100* vn100,
+	VnVector3* magnetic,
+	VnVector3* acceleration,
 	VnVector3* angularRate)
 {
 	if (!vn100->isConnected)
@@ -2534,9 +2534,9 @@ VN_ERROR_CODE vn100_getMagneticAccelerationAngularRate(
 }
 
 VN_ERROR_CODE vn100_getYawPitchRollTrueBodyAccelerationAngularRate(
-	Vn100* vn100, 
-	VnYpr* attitude, 
-	VnVector3* bodyAcceleration, 
+	Vn100* vn100,
+	VnYpr* attitude,
+	VnVector3* bodyAcceleration,
 	VnVector3* angularRate)
 {
 	if (!vn100->isConnected)
@@ -2550,9 +2550,9 @@ VN_ERROR_CODE vn100_getYawPitchRollTrueBodyAccelerationAngularRate(
 }
 
 VN_ERROR_CODE vn100_getYawPitchRollTrueInertialAccelerationAngularRate(
-	Vn100* vn100, 
-	VnYpr* attitude, 
-	VnVector3* inertialAcceleration, 
+	Vn100* vn100,
+	VnYpr* attitude,
+	VnVector3* inertialAcceleration,
 	VnVector3* angularRate)
 {
 	if (!vn100->isConnected)
@@ -2566,10 +2566,10 @@ VN_ERROR_CODE vn100_getYawPitchRollTrueInertialAccelerationAngularRate(
 }
 
 VN_ERROR_CODE vn100_getVpeControl(
-	Vn100* vn100, 
-	uint8_t* enable, 
-	uint8_t* headingMode, 
-	uint8_t* filteringMode, 
+	Vn100* vn100,
+	uint8_t* enable,
+	uint8_t* headingMode,
+	uint8_t* filteringMode,
 	uint8_t* tuningMode)
 {
 	if (!vn100->isConnected)
@@ -2584,11 +2584,11 @@ VN_ERROR_CODE vn100_getVpeControl(
 }
 
 VN_ERROR_CODE vn100_setVpeControl(
-	Vn100* vn100, 
-	uint8_t enable, 
-	uint8_t headingMode, 
-	uint8_t filteringMode, 
-	uint8_t tuningMode, 
+	Vn100* vn100,
+	uint8_t enable,
+	uint8_t headingMode,
+	uint8_t filteringMode,
+	uint8_t tuningMode,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2604,9 +2604,9 @@ VN_ERROR_CODE vn100_setVpeControl(
 }
 
 VN_ERROR_CODE vn100_getVpeMagnetometerBasicTuning(
-	Vn100* vn100, 
-	VnVector3* baseTuning, 
-	VnVector3* adaptiveTuning, 
+	Vn100* vn100,
+	VnVector3* baseTuning,
+	VnVector3* adaptiveTuning,
 	VnVector3* adaptiveFiltering)
 {
 	if (!vn100->isConnected)
@@ -2620,10 +2620,10 @@ VN_ERROR_CODE vn100_getVpeMagnetometerBasicTuning(
 }
 
 VN_ERROR_CODE vn100_setVpeMagnetometerBasicTuning(
-	Vn100* vn100, 
-	VnVector3 baseTuning, 
-	VnVector3 adaptiveTuning, 
-	VnVector3 adaptiveFiltering, 
+	Vn100* vn100,
+	VnVector3 baseTuning,
+	VnVector3 adaptiveTuning,
+	VnVector3 adaptiveFiltering,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2638,9 +2638,9 @@ VN_ERROR_CODE vn100_setVpeMagnetometerBasicTuning(
 }
 
 VN_ERROR_CODE vn100_getVpeAccelerometerBasicTuning(
-	Vn100* vn100, 
-	VnVector3* baseTuning, 
-	VnVector3* adaptiveTuning, 
+	Vn100* vn100,
+	VnVector3* baseTuning,
+	VnVector3* adaptiveTuning,
 	VnVector3* adaptiveFiltering)
 {
 	if (!vn100->isConnected)
@@ -2654,10 +2654,10 @@ VN_ERROR_CODE vn100_getVpeAccelerometerBasicTuning(
 }
 
 VN_ERROR_CODE vn100_setVpeAccelerometerBasicTuning(
-	Vn100* vn100, 
-	VnVector3 baseTuning, 
-	VnVector3 adaptiveTuning, 
-	VnVector3 adaptiveFiltering, 
+	Vn100* vn100,
+	VnVector3 baseTuning,
+	VnVector3 adaptiveTuning,
+	VnVector3 adaptiveFiltering,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2672,11 +2672,11 @@ VN_ERROR_CODE vn100_setVpeAccelerometerBasicTuning(
 }
 
 VN_ERROR_CODE vn100_getImuMeasurements(
-	Vn100* vn100, 
-	VnVector3* magnetic, 
-	VnVector3* acceleration, 
-	VnVector3* angularRate, 
-	float* temperature, 
+	Vn100* vn100,
+	VnVector3* magnetic,
+	VnVector3* acceleration,
+	VnVector3* angularRate,
+	float* temperature,
 	float* pressure)
 {
 	if (!vn100->isConnected)
@@ -2692,7 +2692,7 @@ VN_ERROR_CODE vn100_getImuMeasurements(
 }
 
 VN_ERROR_CODE vn100_getReferenceFrameRotation(
-	Vn100* vn100, 
+	Vn100* vn100,
 	VnMatrix3x3* c)
 {
 	if (!vn100->isConnected)
@@ -2704,8 +2704,8 @@ VN_ERROR_CODE vn100_getReferenceFrameRotation(
 }
 
 VN_ERROR_CODE vn100_setReferenceFrameRotation(
-	Vn100* vn100, 
-	VnMatrix3x3 c, 
+	Vn100* vn100,
+	VnMatrix3x3 c,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2718,13 +2718,13 @@ VN_ERROR_CODE vn100_setReferenceFrameRotation(
 }
 
 VN_ERROR_CODE vn100_getSynchronizationControl(
-	Vn100* vn100, 
-	uint8_t* syncInMode, 
-	uint8_t* syncInEdge, 
-	uint16_t* syncInSkipFactor, 
-	uint8_t* syncOutMode, 
-	uint8_t* syncOutPolarity, 
-	uint16_t* syncOutSkipFactor, 
+	Vn100* vn100,
+	uint8_t* syncInMode,
+	uint8_t* syncInEdge,
+	uint16_t* syncInSkipFactor,
+	uint8_t* syncOutMode,
+	uint8_t* syncOutPolarity,
+	uint16_t* syncOutSkipFactor,
 	uint32_t* syncOutPulseWidth)
 {
 	if (!vn100->isConnected)
@@ -2742,14 +2742,14 @@ VN_ERROR_CODE vn100_getSynchronizationControl(
 }
 
 VN_ERROR_CODE vn100_setSynchronizationControl(
-	Vn100* vn100, 
-	uint8_t syncInMode, 
-	uint8_t syncInEdge, 
-	uint16_t syncInSkipFactor, 
-	uint8_t syncOutMode, 
-	uint8_t syncOutPolarity, 
-	uint16_t syncOutSkipFactor, 
-	uint32_t syncOutPulseWidth, 
+	Vn100* vn100,
+	uint8_t syncInMode,
+	uint8_t syncInEdge,
+	uint16_t syncInSkipFactor,
+	uint8_t syncOutMode,
+	uint8_t syncOutPolarity,
+	uint16_t syncOutSkipFactor,
+	uint32_t syncOutPulseWidth,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2768,9 +2768,9 @@ VN_ERROR_CODE vn100_setSynchronizationControl(
 }
 
 VN_ERROR_CODE vn100_getSynchronizationStatus(
-	Vn100* vn100, 
-	uint32_t* syncInCount, 
-	uint32_t* syncInTime, 
+	Vn100* vn100,
+	uint32_t* syncInCount,
+	uint32_t* syncInTime,
 	uint32_t* syncOutCount)
 {
 	if (!vn100->isConnected)
@@ -2784,10 +2784,10 @@ VN_ERROR_CODE vn100_getSynchronizationStatus(
 }
 
 VN_ERROR_CODE vn100_setSynchronizationStatus(
-	Vn100* vn100, 
-	uint32_t syncInCount, 
-	uint32_t syncInTime, 
-	uint32_t syncOutCount, 
+	Vn100* vn100,
+	uint32_t syncInCount,
+	uint32_t syncInTime,
+	uint32_t syncOutCount,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2802,9 +2802,9 @@ VN_ERROR_CODE vn100_setSynchronizationStatus(
 }
 
 VN_ERROR_CODE vn100_getDeltaThetaAndDeltaVelocity(
-	Vn100* vn100, 
-	float* deltaTime, 
-	VnVector3* deltaTheta, 
+	Vn100* vn100,
+	float* deltaTime,
+	VnVector3* deltaTheta,
 	VnVector3* deltaVelocity)
 {
 	if (!vn100->isConnected)
@@ -2818,8 +2818,8 @@ VN_ERROR_CODE vn100_getDeltaThetaAndDeltaVelocity(
 }
 
 VN_ERROR_CODE vn100_getAccelerationCompensation(
-	Vn100* vn100, 
-	VnMatrix3x3* c, 
+	Vn100* vn100,
+	VnMatrix3x3* c,
 	VnVector3* b)
 {
 	if (!vn100->isConnected)
@@ -2832,9 +2832,9 @@ VN_ERROR_CODE vn100_getAccelerationCompensation(
 }
 
 VN_ERROR_CODE vn100_setAccelerationCompensation(
-	Vn100* vn100, 
-	VnMatrix3x3 c, 
-	VnVector3 b, 
+	Vn100* vn100,
+	VnMatrix3x3 c,
+	VnVector3 b,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2848,8 +2848,8 @@ VN_ERROR_CODE vn100_setAccelerationCompensation(
 }
 
 VN_ERROR_CODE vn100_getMagneticCompensation(
-	Vn100* vn100, 
-	VnMatrix3x3* c, 
+	Vn100* vn100,
+	VnMatrix3x3* c,
 	VnVector3* b)
 {
 	if (!vn100->isConnected)
@@ -2862,9 +2862,9 @@ VN_ERROR_CODE vn100_getMagneticCompensation(
 }
 
 VN_ERROR_CODE vn100_setMagneticCompensation(
-	Vn100* vn100, 
-	VnMatrix3x3 c, 
-	VnVector3 b, 
+	Vn100* vn100,
+	VnMatrix3x3 c,
+	VnVector3 b,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2878,8 +2878,8 @@ VN_ERROR_CODE vn100_setMagneticCompensation(
 }
 
 VN_ERROR_CODE vn100_getGyroCompensation(
-	Vn100* vn100, 
-	VnMatrix3x3* c, 
+	Vn100* vn100,
+	VnMatrix3x3* c,
 	VnVector3* b)
 {
 	if (!vn100->isConnected)
@@ -2892,9 +2892,9 @@ VN_ERROR_CODE vn100_getGyroCompensation(
 }
 
 VN_ERROR_CODE vn100_setGyroCompensation(
-	Vn100* vn100, 
-	VnMatrix3x3 c, 
-	VnVector3 b, 
+	Vn100* vn100,
+	VnMatrix3x3 c,
+	VnVector3 b,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -2908,16 +2908,16 @@ VN_ERROR_CODE vn100_setGyroCompensation(
 }
 
 VN_ERROR_CODE vn100_getImuFilteringConfiguration(
-	Vn100* vn100, 
-	uint16_t* magWindowSize, 
-	uint16_t* accelWindowSize, 
-	uint16_t* gyroWindowSize, 
-	uint16_t* tempWindowSize, 
-	uint16_t* presWindowSize, 
-	uint8_t* magFilterMode, 
-	uint8_t* accelFilterMode, 
-	uint8_t* gyroFilterMode, 
-	uint8_t* tempFilterMode, 
+	Vn100* vn100,
+	uint16_t* magWindowSize,
+	uint16_t* accelWindowSize,
+	uint16_t* gyroWindowSize,
+	uint16_t* tempWindowSize,
+	uint16_t* presWindowSize,
+	uint8_t* magFilterMode,
+	uint8_t* accelFilterMode,
+	uint8_t* gyroFilterMode,
+	uint8_t* tempFilterMode,
 	uint8_t* presFilterMode)
 {
 	if (!vn100->isConnected)
@@ -2938,22 +2938,19 @@ VN_ERROR_CODE vn100_getImuFilteringConfiguration(
 }
 
 VN_ERROR_CODE vn100_setImuFilteringConfiguration(
-	Vn100* vn100, 
-	uint16_t magWindowSize, 
-	uint16_t accelWindowSize, 
-	uint16_t gyroWindowSize, 
-	uint16_t tempWindowSize, 
-	uint16_t presWindowSize, 
-	uint8_t magFilterMode, 
-	uint8_t accelFilterMode, 
-	uint8_t gyroFilterMode, 
-	uint8_t tempFilterMode, 
-	uint8_t presFilterMode, 
+	Vn100* vn100,
+	uint16_t magWindowSize,
+	uint16_t accelWindowSize,
+	uint16_t gyroWindowSize,
+	uint16_t tempWindowSize,
+	uint16_t presWindowSize,
+	uint8_t magFilterMode,
+	uint8_t accelFilterMode,
+	uint8_t gyroFilterMode,
+	uint8_t tempFilterMode,
+	uint8_t presFilterMode,
 	bool waitForResponse)
 {
-	if (!vn100->isConnected)
-		return VNERR_NOT_CONNECTED;
-
 	return vndevice_setImuFilteringConfiguration(
 		&vn100->vndevice,
 		magWindowSize,
@@ -2970,9 +2967,9 @@ VN_ERROR_CODE vn100_setImuFilteringConfiguration(
 }
 
 VN_ERROR_CODE vn100_getDeltaThetaAndDeltaVelocityConfiguration(
-	Vn100* vn100, 
-	uint8_t* integrationFrame, 
-	uint8_t* gyroCompensation, 
+	Vn100* vn100,
+	uint8_t* integrationFrame,
+	uint8_t* gyroCompensation,
 	uint8_t* accelCompensation)
 {
 	if (!vn100->isConnected)
@@ -2986,10 +2983,10 @@ VN_ERROR_CODE vn100_getDeltaThetaAndDeltaVelocityConfiguration(
 }
 
 VN_ERROR_CODE vn100_setDeltaThetaAndDeltaVelocityConfiguration(
-	Vn100* vn100, 
-	uint8_t integrationFrame, 
-	uint8_t gyroCompensation, 
-	uint8_t accelCompensation, 
+	Vn100* vn100,
+	uint8_t integrationFrame,
+	uint8_t gyroCompensation,
+	uint8_t accelCompensation,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -3004,9 +3001,9 @@ VN_ERROR_CODE vn100_setDeltaThetaAndDeltaVelocityConfiguration(
 }
 
 VN_ERROR_CODE vn100_getMagnetometerCalibrationControl(
-	Vn100* vn100, 
-	uint8_t* hsiMode, 
-	uint8_t* hsiOutput, 
+	Vn100* vn100,
+	uint8_t* hsiMode,
+	uint8_t* hsiOutput,
 	uint8_t* convergeRate)
 {
 	if (!vn100->isConnected)
@@ -3020,10 +3017,10 @@ VN_ERROR_CODE vn100_getMagnetometerCalibrationControl(
 }
 
 VN_ERROR_CODE vn100_setMagnetometerCalibrationControl(
-	Vn100* vn100, 
-	uint8_t hsiMode, 
-	uint8_t hsiOutput, 
-	uint8_t convergeRate, 
+	Vn100* vn100,
+	uint8_t hsiMode,
+	uint8_t hsiOutput,
+	uint8_t convergeRate,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -3038,8 +3035,8 @@ VN_ERROR_CODE vn100_setMagnetometerCalibrationControl(
 }
 
 VN_ERROR_CODE vn100_getCalculatedMagnetometerCalibration(
-	Vn100* vn100, 
-	VnMatrix3x3* c, 
+	Vn100* vn100,
+	VnMatrix3x3* c,
 	VnVector3* b)
 {
 	if (!vn100->isConnected)
@@ -3052,8 +3049,8 @@ VN_ERROR_CODE vn100_getCalculatedMagnetometerCalibration(
 }
 
 VN_ERROR_CODE vn100_getMagneticGravityReferenceVectors(
-	Vn100* vn100, 
-	VnVector3* magneticReference, 
+	Vn100* vn100,
+	VnVector3* magneticReference,
 	VnVector3* gravityReference)
 {
 	if (!vn100->isConnected)
@@ -3066,9 +3063,9 @@ VN_ERROR_CODE vn100_getMagneticGravityReferenceVectors(
 }
 
 VN_ERROR_CODE vn100_setMagneticGravityReferenceVectors(
-	Vn100* vn100, 
-	VnVector3 magneticReference, 
-	VnVector3 gravityReference, 
+	Vn100* vn100,
+	VnVector3 magneticReference,
+	VnVector3 gravityReference,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -3082,13 +3079,13 @@ VN_ERROR_CODE vn100_setMagneticGravityReferenceVectors(
 }
 
 VN_ERROR_CODE vn100_getCommunicationProtocolControl(
-	Vn100* vn100, 
-	uint8_t* serialCount, 
-	uint8_t* serialStatus, 
-	uint8_t* spiCount, 
-	uint8_t* spiStatus, 
-	uint8_t* serialChecksum, 
-	uint8_t* spiChecksum, 
+	Vn100* vn100,
+	uint8_t* serialCount,
+	uint8_t* serialStatus,
+	uint8_t* spiCount,
+	uint8_t* spiStatus,
+	uint8_t* serialChecksum,
+	uint8_t* spiChecksum,
 	uint8_t* errorMode)
 {
 	if (!vn100->isConnected)
@@ -3106,14 +3103,14 @@ VN_ERROR_CODE vn100_getCommunicationProtocolControl(
 }
 
 VN_ERROR_CODE vn100_setCommunicationProtocolControl(
-	Vn100* vn100, 
-	uint8_t serialCount, 
-	uint8_t serialStatus, 
-	uint8_t spiCount, 
-	uint8_t spiStatus, 
-	uint8_t serialChecksum, 
-	uint8_t spiChecksum, 
-	uint8_t errorMode, 
+	Vn100* vn100,
+	uint8_t serialCount,
+	uint8_t serialStatus,
+	uint8_t spiCount,
+	uint8_t spiStatus,
+	uint8_t serialChecksum,
+	uint8_t spiChecksum,
+	uint8_t errorMode,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -3132,11 +3129,11 @@ VN_ERROR_CODE vn100_setCommunicationProtocolControl(
 }
 
 VN_ERROR_CODE vn100_getReferenceVectorConfiguration(
-	Vn100* vn100, 
-	uint8_t* useMagModel, 
-	uint8_t* useGravityModel, 
-	uint32_t* recalcThreshold, 
-	float* year, 
+	Vn100* vn100,
+	uint8_t* useMagModel,
+	uint8_t* useGravityModel,
+	uint32_t* recalcThreshold,
+	float* year,
 	VnVector3* lla)
 {
 	if (!vn100->isConnected)
@@ -3152,12 +3149,12 @@ VN_ERROR_CODE vn100_getReferenceVectorConfiguration(
 }
 
 VN_ERROR_CODE vn100_setReferenceVectorConfiguration(
-	Vn100* vn100, 
-	uint8_t useMagModel, 
-	uint8_t useGravityModel, 
-	uint32_t recalcThreshold, 
-	float year, 
-	VnVector3 lla, 
+	Vn100* vn100,
+	uint8_t useMagModel,
+	uint8_t useGravityModel,
+	uint32_t recalcThreshold,
+	float year,
+	VnVector3 lla,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -3174,7 +3171,7 @@ VN_ERROR_CODE vn100_setReferenceVectorConfiguration(
 }
 
 VN_ERROR_CODE vn100_pauseAsyncOutputs(
-	Vn100* vn100, 
+	Vn100* vn100,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)
@@ -3186,7 +3183,7 @@ VN_ERROR_CODE vn100_pauseAsyncOutputs(
 }
 
 VN_ERROR_CODE vn100_resumeAsyncOutputs(
-	Vn100* vn100, 
+	Vn100* vn100,
 	bool waitForResponse)
 {
 	if (!vn100->isConnected)

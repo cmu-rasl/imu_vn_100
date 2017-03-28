@@ -230,7 +230,13 @@ void ImuVn100::Initialize() {
 void ImuVn100::Stream(bool async) {
   // Pause the device first
   VnEnsure(vn100_pauseAsyncOutputs(&imu_, true));
-
+  uint16_t magwinsize, acclwinsize, gyrowinsize, tempwinsize, preswinsize;
+  uint8_t magfiltmode, acclfiltmode, gyrofiltmode, tempfiltmode, presfiltmode;
+  VnEnsure(vn100_getImuFilteringConfiguration(&imu_, &magwinsize, &acclwinsize, &gyrowinsize, &tempwinsize, &preswinsize, &magfiltmode, &acclfiltmode, &gyrofiltmode, &tempfiltmode, &presfiltmode));
+  ROS_INFO("Initial Filter Settings:  %d, %d, %d, %d, %d, %d, %d, %d, %d, %d", magwinsize, acclwinsize, gyrowinsize, tempwinsize, preswinsize, magfiltmode, acclfiltmode, gyrofiltmode, tempfiltmode, presfiltmode);
+//  VnEnsure(vn100_setImuFilteringConfiguration(&imu_, 0, 16, 32, 4, 0, 0, 2, 2, 2, 0, true));
+//  VnEnsure(vn100_getImuFilteringConfiguration(&imu_, &magwinsize, &acclwinsize, &gyrowinsize, &tempwinsize, &preswinsize, &magfiltmode, &acclfiltmode, &gyrofiltmode, &tempfiltmode, &presfiltmode));
+//  ROS_INFO("Set Filter Settings: %d, %d, %d, %d, %d, %d, %d, %d, %d, %d", magwinsize, acclwinsize, gyrowinsize, tempwinsize, preswinsize, magfiltmode, acclfiltmode, gyrofiltmode, tempfiltmode, presfiltmode);
   if (async) {
     VnEnsure(vn100_setAsynchronousDataOutputType(&imu_, VNASYNC_OFF, true));
 
@@ -270,9 +276,7 @@ void ImuVn100::Stream(bool async) {
   VnEnsure(vn100_setVpeBasicControl(&imu_, 1,2,1,1, true));
   VnEnsure(vn100_getVpeBasicControl(&imu_, &vpe_enable,&vpe_headingMode,&vpe_filteringMode,&vpe_tuningMode));
   ROS_INFO("Set VPE Settings: %d %d %d %d",vpe_enable,vpe_headingMode,vpe_filteringMode,vpe_tuningMode );
-
-
-  // Resume the device
+// Resume the device
   VnEnsure(vn100_resumeAsyncOutputs(&imu_, true));
 }
 
